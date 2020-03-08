@@ -1,9 +1,9 @@
 import React from 'react';
-
+import { Button } from 'antd-mobile';
 function App() {
   return (
     <div className="app">
-     测试vs-code 拉去代码并保存到远程仓库
+      <Button type="primary">点击按钮</Button>
     </div>
   );
 }
