@@ -1,23 +1,168 @@
 import React from 'react'
 
-import { Link, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
+import { TabBar } from 'antd-mobile'
+import './index.css'
 
-import Default from './Default'
+import Index from './Default'
 import House from './House'
 import Profile from './Profile'
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTab: 'redTab',
+      hidden: false,
+      fullScreen: false,
+    };
+  }
+  renderContent(pageText) {
+    return (
+      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+        <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
+        <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }}
+          onClick={(e) => {
+            e.preventDefault();
+            this.setState({
+              hidden: !this.state.hidden,
+            });
+          }}
+        >
+          Click to show/hide tab-bar
+        </a>
+        <a style={{ display: 'block', marginBottom: 600, color: '#108ee9' }}
+          onClick={(e) => {
+            e.preventDefault();
+            this.setState({
+              fullScreen: !this.state.fullScreen,
+            });
+          }}
+        >
+          Click to switch fullscreen
+        </a>
+      </div>
+    );
+  }
   render() {
     return (
       <div>
-        <div>
-          <Link to="/home">首页</Link>
-          <Link to="/home/house">房屋列表</Link>
-          <Link to="/home/profile">个人中心</Link>
-        </div>
-        <Route exact path="/home" component={Default}/>
-        <Route  path="/home/house" component={House}/>
-        <Route  path="/home/profile" component={Profile}/>        
+        {/* <Link to="/home/index">首页</Link>
+      <Link to="/home/house">找房</Link>
+     <Link to="/home/profile">我的</Link> */}
+        <Route exact path="/home" component={Index} />
+        <Route path="/home/house" component={House} />
+        <Route path="/home/profile" component={Profile} />
+        <div className="barBox">
+          <TabBar
+            unselectedTintColor="#949494"
+            tintColor="#33A3F4"
+            barTintColor="white"
+            hidden={this.state.hidden}
+          >
+            <TabBar.Item
+              title="Life"
+              key="Life"
+              icon={<div style={{
+                width: '22px',
+                height: '22px',
+                background: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat'
+              }}
+              />
+              }
+              selectedIcon={<div style={{
+                width: '22px',
+                height: '22px',
+                background: 'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat'
+              }}
+              />
+              }
+              selected={this.state.selectedTab === 'blueTab'}
+              badge={1}
+              onPress={() => {
+                this.setState({
+                  selectedTab: 'blueTab',
+                });
+              }}
+              data-seed="logId"
+            >
+              {this.renderContent('Life')}
+            </TabBar.Item>
+            <TabBar.Item
+              icon={
+                <div style={{
+                  width: '22px',
+                  height: '22px',
+                  background: 'url(https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg) center center /  21px 21px no-repeat'
+                }}
+                />
+              }
+              selectedIcon={
+                <div style={{
+                  width: '22px',
+                  height: '22px',
+                  background: 'url(https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg) center center /  21px 21px no-repeat'
+                }}
+                />
+              }
+              title="Koubei"
+              key="Koubei"
+              badge={'new'}
+              selected={this.state.selectedTab === 'redTab'}
+              onPress={() => {
+                this.setState({
+                  selectedTab: 'redTab',
+                });
+              }}
+              data-seed="logId1"
+            >
+              {this.renderContent('Koubei')}
+            </TabBar.Item>
+            <TabBar.Item
+              icon={
+                <div style={{
+                  width: '22px',
+                  height: '22px',
+                  background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
+                }}
+                />
+              }
+              selectedIcon={
+                <div style={{
+                  width: '22px',
+                  height: '22px',
+                  background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
+                }}
+                />
+              }
+              title="Friend"
+              key="Friend"
+              dot
+              selected={this.state.selectedTab === 'greenTab'}
+              onPress={() => {
+                this.setState({
+                  selectedTab: 'greenTab',
+                });
+              }}
+            >
+              {this.renderContent('Friend')}
+            </TabBar.Item>
+            <TabBar.Item
+              icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
+              selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+              title="My"
+              key="my"
+              selected={this.state.selectedTab === 'yellowTab'}
+              onPress={() => {
+                this.setState({
+                  selectedTab: 'yellowTab',
+                });
+              }}
+            >
+              {this.renderContent('My')}
+            </TabBar.Item>
+          </TabBar>
+        </div >
       </div>
     )
   }
