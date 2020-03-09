@@ -21,42 +21,14 @@ class Home extends React.Component {
       fullScreen: false,
     };
   }
-  renderContent(pageText) {
-    return (
-      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-        <div style={{ paddingTop: 60 }}>Clicked “{pageText}” tab， show “{pageText}” information</div>
-        <a style={{ display: 'block', marginTop: 40, marginBottom: 20, color: '#108ee9' }}
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({
-              hidden: !this.state.hidden,
-            });
-          }}
-        >
-          Click to show/hide tab-bar
-        </a>
-        <a style={{ display: 'block', marginBottom: 600, color: '#108ee9' }}
-          onClick={(e) => {
-            e.preventDefault();
-            this.setState({
-              fullScreen: !this.state.fullScreen,
-            });
-          }}
-        >
-          Click to switch fullscreen
-        </a>
-      </div>
-    );
-  }
+  
   render() {
     return (
       <div>
         {/* <Link to="/home/index">首页</Link>
       <Link to="/home/house">找房</Link>
      <Link to="/home/profile">我的</Link> */}
-        <Route exact path="/home" component={Index} />
-        <Route path="/home/house" component={House} />
-        <Route path="/home/profile" component={Profile} />
+
         <div className="barBox">
           <TabBar
             unselectedTintColor="#949494"
@@ -69,30 +41,32 @@ class Home extends React.Component {
               key="1"
               icon={<i className="iconfont icon-ind" />}
               selectedIcon={<i className="iconfont icon-ind" />}
-              selected={this.state.selectedTab === 'blueTab'}
+              selected={this.props.location.pathname === '/home'}
               onPress={() => {
+                this.props.history.push('/home')
                 this.setState({
-                  selectedTab: 'blueTab',
+                  selectedTab: '/home',
                 });
               }}
               data-seed="logId"
             >
-              {this.renderContent('Life')}
+              <Route exact path="/home" component={Index} />
             </TabBar.Item>
             <TabBar.Item
               icon={<i className="iconfont icon-findHouse"/>}
               selectedIcon={<i className="iconfont icon-findHouse"/>}
               title="找房"
               key="2"        
-              selected={this.state.selectedTab === 'redTab'}
+              selected={this.props.location.pathname === '/home/house'}
               onPress={() => {
+                this.props.history.push('/home/house')
                 this.setState({
-                  selectedTab: 'redTab',
+                  selectedTab: '/home/house'
                 });
               }}
               data-seed="logId1"
             >
-              {this.renderContent('Koubei')}
+             <Route path="/home/house" component={House} />
             </TabBar.Item>
             <TabBar.Item
               icon={<i className="iconfont icon-my" />}
@@ -100,14 +74,15 @@ class Home extends React.Component {
               title="我的"
               key="3"
               dot
-              selected={this.state.selectedTab === 'greenTab'}
+              selected={this.props.location.pathname === '/home/profile'}
               onPress={() => {
+                this.props.history.push('/home/profile')
                 this.setState({
-                  selectedTab: 'greenTab',
+                  selectedTab: '/home/profile',
                 });
               }}
             >
-              {this.renderContent('Friend')}
+              <Route path="/home/profile" component={Profile} />
             </TabBar.Item>
 
           </TabBar>

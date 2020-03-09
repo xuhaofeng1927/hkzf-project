@@ -4,14 +4,11 @@ import CityList from './pages/CityList'
 import Map from './pages/Map'
 import NotFound from './pages/Fn404'
 // import { Button } from 'antd-mobile';
-import { BrowserRouter as Router, Route, Link,Switch} from 'react-router-dom'
+import { BrowserRouter as Router, Route,Switch} from 'react-router-dom'
 function App() {
   return (
     <Router className="app">
       {/* 一级路由导航 */}
-        <Link to="/home" >home</Link>
-        <Link to="/cityList" >cityList</Link>
-        <Link to="/map" >map</Link>
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/home" component={Home} />
