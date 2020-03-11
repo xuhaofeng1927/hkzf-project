@@ -29,7 +29,7 @@ class Home extends React.Component {
       return (
       <TabBar.Item
        title={Item.title}
-       key="1"
+       key={Item.id}
        icon={<i className={Item.icon} />}
        selectedIcon={<i className={Item.icon} />}
        selected={this.props.location.pathname === Item.path}
