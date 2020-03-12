@@ -1,6 +1,6 @@
 import React from 'react';
 import { Carousel } from 'antd-mobile';
-import axios from 'axios';
+import request from '../../../untils/request'
 
 class Default extends React.Component {
   state = {
@@ -11,9 +11,11 @@ class Default extends React.Component {
   }
   // 获取轮播图数据
   getCarousel= async() => {
-    const {data} = await axios.get('http://localhost:8080/home/swiper')
+    const {data} = await request.get('/home/swiper')
+    console.log(data);
+    
     this.setState({
-      CarouselList: data.body
+      CarouselList: data
     });
     
   }
