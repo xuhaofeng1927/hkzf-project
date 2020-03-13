@@ -1,8 +1,8 @@
 import React from 'react';
 import { Carousel } from 'antd-mobile';
-// 引入新的请求
-import request,{BASE_URL} from '../../../untils/request'
-
+// 引入基础地址
+import {BASE_URL} from '../../../untils/request'
+import {getSwiper} from '../../../api/home' 
 class Default extends React.Component {
   state = {
     // 轮播图数据
@@ -12,7 +12,7 @@ class Default extends React.Component {
   }
   // 获取轮播图数据
   getCarousel= async() => {
-    const {data} = await request.get('/home/swiper')
+    const {data} = await getSwiper()
     console.log(data);
     
     this.setState({
