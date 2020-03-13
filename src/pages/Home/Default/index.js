@@ -1,6 +1,7 @@
 import React from 'react';
 import { Carousel } from 'antd-mobile';
-import request from '../../../untils/request'
+// 引入新的请求
+import request,{BASE_URL} from '../../../untils/request'
 
 class Default extends React.Component {
   state = {
@@ -40,7 +41,7 @@ class Default extends React.Component {
                 style={{ display: 'inline-block', width: '100%', height: this.state.imgHeight }}
               >
                 <img
-                  src={`http://localhost:8080${Item.imgSrc}`}
+                  src={`${BASE_URL}${Item.imgSrc}`}
                   alt=""
                   style={{ width: '100%', verticalAlign: 'top' }}
                   onLoad={() => {

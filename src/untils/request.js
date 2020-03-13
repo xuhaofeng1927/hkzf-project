@@ -1,7 +1,8 @@
 import axios from 'axios'
+import {Toast} from 'antd-mobile'
 
 // 后台接口的基础地址
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = 'http://api-haoke-dev.itheima.net';
 // 创建axios的实例
 const request = axios.create({
   baseURL: BASE_URL
@@ -12,6 +13,7 @@ const request = axios.create({
 // 添加一个请求拦截器
 request.interceptors.request.use(function (config) {
   // 请求参数
+  Toast.loading('加载中...', 0)
   return config;
 }, function (error) {
   // 处理请求错误
@@ -22,6 +24,7 @@ request.interceptors.request.use(function (config) {
 request.interceptors.response.use(function (response) {
   // 位于2xx范围内的任何状态代码都会触发此函数
   // 对响应数据做些什么
+  Toast.hide()
   const data = {
     status: response.data.status,
     description: response.data.description,
