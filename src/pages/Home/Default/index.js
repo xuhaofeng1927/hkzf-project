@@ -2,6 +2,7 @@ import React from 'react';
 import { Carousel } from 'antd-mobile';
 // 引入基础地址
 import {BASE_URL} from '../../../untils/request'
+// 映入首页需要的接口
 import {getSwiper} from '../../../api/home' 
 class Default extends React.Component {
   state = {
@@ -9,15 +10,22 @@ class Default extends React.Component {
     CarouselList: [],
     // 轮播图占位
     imgHeight: 176,
+    // 自动播放开关
+    autoplay:false
   }
   // 获取轮播图数据
   getCarousel= async() => {
-    const {data} = await getSwiper()
-    console.log(data);
+    const {status,data} = await getSwiper()  
+    if (status===200) {
+      this.setState({
+        CarouselList: data
+      },()=>{
+        this.setState({
+          autoplay:true
+        })
+      });
+    } 
     
-    this.setState({
-      CarouselList: data
-    });
     
   }
   componentDidMount() {
@@ -30,7 +38,7 @@ class Default extends React.Component {
         {/* 轮播图 */}
           <Carousel
             // 自动播放控制
-            autoplay={false}
+            autoplay={this.state.autoplay}
             //循环播放
             infinite
           >
