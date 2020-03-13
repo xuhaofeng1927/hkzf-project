@@ -13,3 +13,41 @@
     touch-action: none;
 }
 ```
+#### 2、封装方法来单独渲染数据，打印undifined或者报错
+ ``` JS
+ // 轮播图视图渲染
+  carouselData = () => {
+    return this.state.CarouselList.map(Item => (
+      <a
+        key={Item.id}
+        href="http://www.alipay.com"
+        style={{ display: 'inline-block', width: '100%', height: this.state.imgHeight }}
+      >
+        <img
+          src={`${BASE_URL}${Item.imgSrc}`}
+          alt=""
+          style={{ width: '100%', verticalAlign: 'top' }}
+          onLoad={() => {
+            //根据窗口大小事件改变高度
+            window.dispatchEvent(new Event('resize'));
+            this.setState({ imgHeight: 'auto' });
+          }}
+        />
+      </a>
+    ))
+  }
+```
+``` JS
+ <Carousel
+    // 自动播放控制
+    autoplay={this.state.autoplay}
+    //循环播放
+    infinite
+  >
+    {this.carouselData()}
+  </Carousel>
+```
+解决办法 
+React类组件中调用函数时必须带有Return，不然返回的就是undifined，没有数据
+
+

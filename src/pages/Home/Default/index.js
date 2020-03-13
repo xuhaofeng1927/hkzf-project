@@ -36,11 +36,38 @@ class Default extends React.Component {
     this.getCarousel()
   }
   // 轮播图视图渲染
-  // carouselData = () => {
-  // }
+  carouselData = () => {
+    return this.state.CarouselList.map(Item => (
+      <a
+        key={Item.id}
+        href="http://www.alipay.com"
+        style={{ display: 'inline-block', width: '100%', height: this.state.imgHeight }}
+      >
+        <img
+          src={`${BASE_URL}${Item.imgSrc}`}
+          alt=""
+          style={{ width: '100%', verticalAlign: 'top' }}
+          onLoad={() => {
+            //根据窗口大小事件改变高度
+            window.dispatchEvent(new Event('resize'));
+            this.setState({ imgHeight: 'auto' });
+          }}
+        />
+      </a>
+    ))
+  }
   // 栏目导航试图渲染
-  // navData = () => {
-  // }
+  navData = () => {
+    return navs.map(Item => {
+      return (
+        <Flex.Item onClick={() => this.props.history.push(Item.path)
+        } key={Item.id}>
+          <img src={Item.img} alt={Item.title} />
+          <p>{Item.title}</p>
+        </Flex.Item>
+      )
+    })
+  }
   render() {
     return (
       <div className="home">
@@ -51,37 +78,12 @@ class Default extends React.Component {
           //循环播放
           infinite
         >
-          {this.state.CarouselList.map(Item => (
-            <a
-              key={Item.id}
-              href="http://www.alipay.com"
-              style={{ display: 'inline-block', width: '100%', height: this.state.imgHeight }}
-            >
-              <img
-                src={`${BASE_URL}${Item.imgSrc}`}
-                alt=""
-                style={{ width: '100%', verticalAlign: 'top' }}
-                onLoad={() => {
-                  //根据窗口大小事件改变高度
-                  window.dispatchEvent(new Event('resize'));
-                  this.setState({ imgHeight: 'auto' });
-                }}
-              />
-            </a>
-          ))}
+          {this.carouselData()}
         </Carousel>
 
         {/* 栏目导航 */}
         <Flex className="nav">
-          {navs.map(Item => {
-            return (
-              <Flex.Item onClick={() => console.log(Item.id)
-              } key={Item.id}>
-                <img src={Item.img} alt={Item.title} />
-                <p>{Item.title}</p>
-              </Flex.Item>
-            )
-          })}
+          {this.navData()}
         </Flex>
       </div>
     )
