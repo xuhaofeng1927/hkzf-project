@@ -7,7 +7,8 @@ import { getSwiper } from '../../../api/home'
 // 引入首页需要的数据
 import { navs } from '../../../untils/homeItems'
 // 引入样式
-import './index.css'
+// import './index.css'
+import './index.scss'
 class Default extends React.Component {
   state = {
     // 轮播图数据
@@ -85,6 +86,14 @@ class Default extends React.Component {
         <Flex className="nav">
           {this.navData()}
         </Flex>
+
+        {/* 租房小组 */}
+        <div className="group">
+          <Flex className="group-title" justify="between">
+            <h3>租房小组</h3>
+            <span>更多</span>
+          </Flex>
+        </div>
       </div>
     )
   }
