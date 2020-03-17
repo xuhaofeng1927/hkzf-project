@@ -1,14 +1,14 @@
 import React from 'react';
-import { Carousel, Flex } from 'antd-mobile';
+import { Carousel, Flex, Grid } from 'antd-mobile';
 // 引入基础地址
 import { BASE_URL } from '../../../untils/request'
 // 引入首页需要的接口
-import { getSwiper } from '../../../api/home'
+import { getSwiper, getGroup } from '../../../api/home/home'
 // 引入首页需要的数据
 import { navs } from '../../../untils/homeItems'
 // 引入样式
-// import './index.css'
 import './index.scss'
+
 class Default extends React.Component {
   state = {
     // 轮播图数据
@@ -16,7 +16,9 @@ class Default extends React.Component {
     // 轮播图占位
     imgHeight: 176,
     // 自动播放开关
-    autoplay: false
+    autoplay: false,
+    // 租房小组宫格数据
+    groups: []
   }
   // 获取轮播图数据
   getCarousel = async () => {
@@ -31,10 +33,20 @@ class Default extends React.Component {
       });
     }
   }
-
+  // 获取租房小组的数据
+  getGroup = async () => {
+    const { status, data } = await getGroup();
+    if (status === 200) {
+      this.setState({
+        groups: data
+      })
+    }
+  }
   componentDidMount() {
     // 获取轮播图数据
     this.getCarousel()
+    // 获取租房小组的数据
+    this.getGroup()
   }
   // 轮播图视图渲染
   carouselData = () => {
@@ -69,6 +81,7 @@ class Default extends React.Component {
       )
     })
   }
+
   render() {
     return (
       <div className="home">
@@ -93,6 +106,26 @@ class Default extends React.Component {
             <h3>租房小组</h3>
             <span>更多</span>
           </Flex>
+          {/* 宫格 */}
+          <Grid
+            data={this.state.groups}
+            columnNum={2}
+            // 关闭默认正方形
+            square={false}
+            hasLine={false}
+            renderItem={item => {
+              return (
+                // item结构
+                <Flex className="grid-item" justify="between">
+                  <div className="desc">
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+                  </div>
+                  <img src={`${BASE_URL}${item.imgSrc}`} alt="" />
+                </Flex>
+              )
+            }}
+          />
         </div>
       </div>
     )
